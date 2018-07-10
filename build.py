@@ -1,6 +1,7 @@
 from jinja2 import Environment, FileSystemLoader
 from jinja2_markdown import MarkdownExtension
 import json
+import os
 
 
 def load_config():
@@ -14,6 +15,7 @@ def load_markdown_article(path):
 
 
 def save_page(path, content):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, 'w', encoding='utf8') as f:
         f.write(content)
 
@@ -31,17 +33,20 @@ def get_articles_by_topic(articles_info, topic):
 
 def render_pages(articles_info):
     env = get_jinja_env()
-    index_template = env.get_template('index.html')
-    display_dictionary = {'topics': articles_info['topics']}
-    index_output = index_template.render(display_dictionary)
-    save_page('static/index.html', index_output)
     for article in articles_info['articles']:
         article_template = env.get_template('article.html')
         article_data = load_markdown_article('articles/{}'.format(article['source']))
-        display_dictionary = {'article_data': article_data}
-        article_output = article_template.render(display_dictionary)
-        acticle_html_path = 'static/{}.html'.format(article['source'].split('/')[1].split('.')[0])
-        save_page(acticle_html_path, article_output)
+        article_display_dictionary = {'article_data': article_data}
+        article_output = article_template.render(article_display_dictionary)
+        article_html_path = 'static/{}.html'.format(article['source'].split('.')[0])
+        save_page(article_html_path, article_output)
+    index_template = env.get_template('index.html')
+    index_display_dictionary = {
+        'topics': articles_info['topics'],
+        'articles': articles_info['articles']
+    }
+    index_output = index_template.render(index_display_dictionary)
+    save_page('static/index.html', index_output)
 
 
 if __name__ == '__main__':
