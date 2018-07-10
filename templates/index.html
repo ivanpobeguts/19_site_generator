@@ -1,15 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
-{% for topic in topics %}
-<div>
-  <h3>{{ topic['title'] }}</h3>
-  <ul>
-    {% for article in articles %}
-    {% if article['topic'] == topic['slug'] %}
+  {% for topic in topics %}
+
+
+  <div class="col-sm-4 col-md-offset-1" style="width: 15%">
+    <h2>{{ topic['title'] }}</h2>
+    <ul>
+      {% for article in articles %}
+      {% if article['topic'] == topic['slug'] %}
       <li><a href="{{ article['source'].split('.')[0] + '.html' }}">{{ article['title'] }}</a></li>
-    {% endif %}
-    {% endfor %}
-  </ul>
-</div>
-{% endfor %}
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+
+
+  {% endfor %}
 {% endblock %}

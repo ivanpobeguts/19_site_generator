@@ -27,10 +27,6 @@ def get_jinja_env():
     )
 
 
-def get_articles_by_topic(articles_info, topic):
-    return [article for article in articles_info['articles'] if article['topic'] == topic]
-
-
 def render_pages(articles_info):
     env = get_jinja_env()
     for article in articles_info['articles']:
