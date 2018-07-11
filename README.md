@@ -13,7 +13,7 @@ To render the site just launch **build.py** script:
 ```bash
 $ python build.py
 ```
-The site will be available on [http://127.0.0.1:5500/](localhost).
+The site will be available on [localhost](http://127.0.0.1:5500/).
 
 # Project Goals
 
