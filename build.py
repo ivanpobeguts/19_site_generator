@@ -37,7 +37,6 @@ def render_pages(articles_info):
         if ' ' in article['source']:
             article['source'] = article['source'].replace(' ', '')
         article_html_path = 'static/{}.html'.format(article['source'].split('.')[0])
-        print(article['source'])
         save_page(article_html_path, article_output)
     index_template = env.get_template('index.html')
     index_display_dictionary = {
