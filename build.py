@@ -33,18 +33,18 @@ def render_pages(articles_info):
         article_template = env.get_template('article.html')
         article_data = load_markdown_article('articles/{}'.format(article['source']))
         article_display_dictionary = {'article_data': article_data}
-        article_output = article_template.render(article_display_dictionary)
+        article_output_page = article_template.render(article_display_dictionary)
         if ' ' in article['source']:
             article['source'] = article['source'].replace(' ', '')
         article_html_path = 'static/{}.html'.format(article['source'].split('.')[0])
-        save_page(article_html_path, article_output)
+        save_page(article_html_path, article_output_page)
     index_template = env.get_template('index.html')
     index_display_dictionary = {
         'topics': articles_info['topics'],
         'articles': articles_info['articles']
     }
-    index_output = index_template.render(index_display_dictionary)
-    save_page('static/index.html', index_output)
+    index_output_page = index_template.render(index_display_dictionary)
+    save_page('static/index.html', index_output_page)
 
 
 if __name__ == '__main__':
