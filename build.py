@@ -2,6 +2,7 @@ from jinja2 import Environment, FileSystemLoader
 from jinja2_markdown import MarkdownExtension
 import json
 import os
+from livereload import Server
 
 
 def load_config():
@@ -47,6 +48,14 @@ def render_pages(articles_info):
     save_page('static/index.html', index_output_page)
 
 
-if __name__ == '__main__':
+def make_site():
     articles_info = load_config()
     render_pages(articles_info)
+
+
+if __name__ == '__main__':
+    server = Server()
+    server.watch('templates/', make_site)
+    server.watch('articles/', make_site)
+    server.watch('static/img', make_site)
+    server.serve(root='static/')
