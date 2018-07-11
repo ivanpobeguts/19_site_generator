@@ -1,6 +1,6 @@
 # Encyclopedia
 
-The script renders a simple [site](https://ivanpobeguts.github.io/19_site_generator/static/index.html) from .md files.
+The script renders a simple [site](https://ivanpobeguts.github.io/19_site_generator/static/index.html) from _.md_ files.
 
 # How to
 
