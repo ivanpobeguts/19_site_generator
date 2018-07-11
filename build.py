@@ -34,7 +34,10 @@ def render_pages(articles_info):
         article_data = load_markdown_article('articles/{}'.format(article['source']))
         article_display_dictionary = {'article_data': article_data}
         article_output = article_template.render(article_display_dictionary)
+        if ' ' in article['source']:
+            article['source'] = article['source'].replace(' ', '')
         article_html_path = 'static/{}.html'.format(article['source'].split('.')[0])
+        print(article['source'])
         save_page(article_html_path, article_output)
     index_template = env.get_template('index.html')
     index_display_dictionary = {
