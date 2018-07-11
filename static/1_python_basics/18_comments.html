@@ -7,39 +7,40 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <style>
-
-  </style>
 </head>
+
 <header>
   <a href="/19_site_generator/static/index.html" style="text-decoration:none">
     <nav class="navbar bg-primary text-center" style="background-color: #0000CD">
       <h1>Devman Encyclopedia</h1>
     </nav>
   </a>
-
 </header>
+
 <body>
 
-<div class="row">
-<div class="col-lg-6 col-lg-offset-3" style="width: 50%" >
-  <h2>Какие бывают</h2>
+<div class="container">
+  <div class="row">
+    <div>
+      <h2>Какие бывают</h2>
 <h3>Обычные комментарии</h3>
 <p>Комментарии – способ прокомментировать код на ходу, на той же строке. </p>
-<p>:::python
-  price = Column(BigInteger)  # рубли * 100</p>
+<pre><code>:::python
+price = Column(BigInteger)  # рубли * 100
+</code></pre>
 <h3>Докстринги</h3>
 <p>Докстринг – строковая переменная, которая идёт сразу за объявлением функции, класса, метода или модуля.
 Она нужна для документирования всей функции: описания входящих параметров, результата, логики, крайних случаев.
 Заключается в тройные двойные кавычки. Вот так:</p>
-<p>:::python
-  def tensorsolve(a, b, axes=None):
-      """
-      Solve the tensor equation <code>a x = b</code> for x.
-      It is assumed that all indices of <code>x</code> are summed over in the product,
-      together with the rightmost indices of <code>a</code>, as is done in, for example,
-      <code>tensordot(a, x, axes=len(b.shape))</code>.
-      """</p>
+<pre><code>:::python
+def tensorsolve(a, b, axes=None):
+</code></pre>
+<p>"""
+  Solve the tensor equation <code>a x = b</code> for x.
+  It is assumed that all indices of <code>x</code> are summed over in the product,
+  together with the rightmost indices of <code>a</code>, as is done in, for example,
+  <code>tensordot(a, x, axes=len(b.shape))</code>.
+  """</p>
 <p>В серьёзных проектах из них часто генерируется документация, поэтому они могут быть большими, по несколько экранов.
 Это касается проектов, у которых есть документация для разработчиков: Django, numpy, sqlalchemy.</p>
 <p>Если проект не подразумевает, что им будут пользоваться другие разработчики, такого быть не должно.
@@ -51,30 +52,35 @@
 <p>Самая частая ошибка, связанная с комментариями: дублирование информации.
 В таком случае комментарий не несёт дополнительной информации, а просто переводит соседний код
 с Питона на русский/английский. Пример:</p>
-<p>:::python
-  # загружаем данные из файла data.json
-  with open('users.json', 'r') as handler:
-      data = json.load(handler)</p>
+<pre><code>:::python
+# загружаем данные из файла data.json
+with open('users.json', 'r') as handler:
+</code></pre>
+<p>data = json.load(handler)</p>
 <p>Вот как можно исправить:</p>
-<p>:::python
-  with open('users.json', 'r') as handler:
-      data = json.load(handler)</p>
+<pre><code>:::python
+with open('users.json', 'r') as handler:
+</code></pre>
+<p>data = json.load(handler)</p>
 <p>А так – ещё лучше:</p>
-<p>:::python
-  data = load_all_users_from_file()</p>
+<pre><code>:::python
+data = load_all_users_from_file()
+</code></pre>
 <h3>Не сопровождать комментарии</h3>
 <p>Другая частая ошибка: не менять комментарии при изменении кода. В примере выше мы загружали данные из файла. 
 Через месяц взялись за голову и поселили данные в базе данных. Код стал таким:</p>
-<p>:::python
-  # загружаем данные из файла data.json
-  data = db_session.query(User).all()</p>
+<pre><code>:::python
+# загружаем данные из файла data.json
+data = db_session.query(User).all()
+</code></pre>
 <p>Данные из файла? WAT?</p>
 <h3>Думать, что все поймут</h3>
 <p>Когда программист пишет кусок кода, он глубоко в него погружён: держит в голове все детали, связи и особые случаи.
 В таком состоянии всё поведение кажется понятным, поэтому разработчик может оставить комментарий самому себе.
 Проблема в том, что когда он переключится на другую задачу и забудет про детали, комментарий может взорвать мозг:</p>
-<p>:::python
-  inv(strain_tensor) - rigidity.T  # правый случай</p>
+<pre><code>:::python
+inv(strain_tensor) - rigidity.T  # правый случай
+</code></pre>
 <p>Правый, правда? Ну, теперь всё понятно.</p>
 <h3>Шутить</h3>
 <p>Шутки к неидеальному коду смотрятся неуместно. Представь, как чувствует себя разработчик, копающийся в чужом
@@ -84,10 +90,10 @@
 <p>Вот хорошие причины использовать комментарии:</p>
 <ul>
 <li><em>объяснить неочевидное поведение</em>: бывает, что нужно объяснить какой-нибудь подводный камень куска кода
-или объяснить поведение в особом случае; использовать только если ту же информацию в коде поселить нельзя или
-очень сложно;</li>
+  или объяснить поведение в особом случае; использовать только если ту же информацию в коде поселить нельзя или
+  очень сложно;</li>
 <li><em>оставить напоминание себе или коллеге</em>: речь про комментарии вроде <code>TODO: кешировать ответ ручки</code>
-или <code>FIXME: учитывать часовой пояс</code>.</li>
+  или <code>FIXME: учитывать часовой пояс</code>.</li>
 </ul>
 <p>Прежде чем написать комментарий, попробуй поселить его в коде, указав параметр или дав подходящее название переменной.</p>
 <h2>Что изучать</h2>
@@ -97,16 +103,11 @@
 <li><a href="https://docs.python.org/3.5/library/doctest.html">doctest</a>. Документация к модулю про доктесты.</li>
 <li><a href="http://stackoverflow.com/questions/184618/">What is the best comment in source code you have ever encountered?</a>. Шутить в коде не стоит, а вот посмеяться с чужих шуток можно. Это ж не нам поддерживать.</li>
 </ul>
-</div>
+    </div>
+  </div>
 </div>
 
 </body>
-<!--<footer class="page-footer">-->
-  <!--<div class="footer-copyright text-center">-->
-    <!--<a href="https://devman.org"><img src="/19_site_generator/static/img/devman_logo.png"-->
-                                      <!--alt="Здесь должно быть лого..."></a>-->
-  <!--</div>-->
-<!--</footer>-->
 
 <footer class="page-footer">
   <div class="footer-copyright text-center">
@@ -114,4 +115,5 @@
                                       alt="Здесь должно быть лого..."></a>
   </div>
 </footer>
+
 </html>
