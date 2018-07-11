@@ -1,6 +1,6 @@
 # Encyclopedia
 
-The script renders a simple [site](https://ivanpobeguts.github.io/19_site_generator/static/index.html) from _.md_ files.
+The script renders a simple site from _.md_ files.
 
 # How to
 
@@ -13,6 +13,7 @@ To render the site just launch **build.py** script:
 ```bash
 $ python build.py
 ```
+The site will be available on [http://127.0.0.1:5500/](localhost).
 
 # Project Goals
 
