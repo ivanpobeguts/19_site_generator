@@ -58,9 +58,8 @@ def make_site():
 
 
 if __name__ == '__main__':
-    # server = Server()
-    # server.watch('templates/', make_site)
-    # server.watch('articles/', make_site)
-    # server.watch('static/img', make_site)
-    # server.serve(root='static/')
-    make_site()
+    server = Server()
+    server.watch('templates/', make_site)
+    server.watch('articles/', make_site)
+    server.watch('static/img', make_site)
+    server.serve(root='static/')
