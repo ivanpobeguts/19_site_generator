@@ -30,10 +30,14 @@ def get_jinja_env():
 
 def render_pages(articles_info):
     env = get_jinja_env()
+    static_url = '/19_site_generator/static'
     for article in articles_info['articles']:
         article_template = env.get_template('article.html')
         article_data = load_markdown_article(os.path.join('articles/', article['source']))
-        article_context = {'article_data': article_data}
+        article_context = {
+            'article_data': article_data,
+            'STATIC_URL': static_url
+        }
         article_output_page = article_template.render(article_context)
         slug = article['source'].replace(' ', '')
         article_html_path = 'static/{}.html'.format(os.path.splitext(slug)[0])
@@ -42,7 +46,7 @@ def render_pages(articles_info):
     index_context = {
         'topics': articles_info['topics'],
         'articles': articles_info['articles'],
-        'STATIC_URL': '../static'
+        'STATIC_URL': static_url
     }
     index_output_page = index_template.render(index_context)
     save_page('static/index.html', index_output_page)
