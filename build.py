@@ -32,19 +32,19 @@ def render_pages(articles_info):
     env = get_jinja_env()
     for article in articles_info['articles']:
         article_template = env.get_template('article.html')
-        article_data = load_markdown_article('articles/{}'.format(article['source']))
-        article_display_dictionary = {'article_data': article_data}
-        article_output_page = article_template.render(article_display_dictionary)
-        if ' ' in article['source']:
-            article['source'] = article['source'].replace(' ', '')
-        article_html_path = 'static/{}.html'.format(article['source'].split('.')[0])
+        article_data = load_markdown_article(os.path.join('articles/', article['source']))
+        article_context = {'article_data': article_data}
+        article_output_page = article_template.render(article_context)
+        slug = article['source'].replace(' ', '')
+        article_html_path = 'static/{}.html'.format(os.path.splitext(slug)[0])
         save_page(article_html_path, article_output_page)
     index_template = env.get_template('index.html')
-    index_display_dictionary = {
+    index_context = {
         'topics': articles_info['topics'],
-        'articles': articles_info['articles']
+        'articles': articles_info['articles'],
+        'STATIC_URL': '../static'
     }
-    index_output_page = index_template.render(index_display_dictionary)
+    index_output_page = index_template.render(index_context)
     save_page('static/index.html', index_output_page)
 
 
@@ -54,8 +54,9 @@ def make_site():
 
 
 if __name__ == '__main__':
-    server = Server()
-    server.watch('templates/', make_site)
-    server.watch('articles/', make_site)
-    server.watch('static/img', make_site)
-    server.serve(root='static/')
+    # server = Server()
+    # server.watch('templates/', make_site)
+    # server.watch('articles/', make_site)
+    # server.watch('static/img', make_site)
+    # server.serve(root='static/')
+    make_site()
